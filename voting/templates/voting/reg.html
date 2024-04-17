@@ -1,0 +1,153 @@
+{% extends "voting/base.html" %}
+{% block content %}
+
+<style>
+    body {
+        background-color: #ffffff; /* Set background color to white */
+        font-family: Arial, sans-serif; /* Change font family */
+    }
+
+    .login-box {
+        margin: 50px auto;
+        width: 300px;
+        padding: 20px;
+        background-color: #ffffff; /* Set background color outside the form to white */
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1); /* Add shadow */
+    }
+
+    .login-logo {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #000000; /* Set font color to black */
+    }
+
+    .login-box-body {
+        margin-bottom: 10px; /* Decrease the margin */
+    }
+
+    .form-group {
+        margin-bottom: 10px; /* Decrease the margin */
+    }
+
+    .form-group.has-feedback {
+        position: relative;
+    }
+
+    .form-group.has-feedback .form-control {
+        padding-right: 40px;
+    }
+
+    .form-group.has-feedback .form-control-feedback {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+    .btn-block {
+        display: block;
+        width: 100%;
+    }
+
+    .btn-primary {
+        background-color: #00bfff; /* Set sky blue background color for primary buttons */
+        border-color: #00bfff; /* Set sky blue border color */
+    }
+
+    .btn-primary:hover {
+        background-color: #0099cc; /* Darken the background color on hover */
+        border-color: #0099cc;
+    }
+
+    .btn-flat {
+        border-radius: 0;
+    }
+
+    .btn-primary,
+    .btn-success {
+        color: #ffffff; /* Set font color to white for primary and success buttons */
+    }
+</style>
+
+<div class="login-box">
+    <div class="login-logo">
+        <b>Online Voting System</b>
+    </div>
+
+    <div class="login-box-body">
+        <form action="{% url 'account_register' %}" method="POST">
+            {% csrf_token %}
+            <div class="modal-body">
+                {% for field in form1 %}
+                <div class="form-group has-feedback">
+                    <span class="text-danger">{{field.errors}}</span>
+                    {{field.label_tag}}
+                    {{field}}
+                </div>
+                {% endfor %}
+
+                {% for field in form2 %}
+                <div class="form-group has-feedback">
+                    <span class="text-danger">{{field.errors}}</span>
+                    {{field.label_tag}}
+                    {{field}}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat" name="login"><i
+                            class="fa fa-user-plus"></i> Register</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="login-box-body">
+        <p class="login-box-msg" style="margin-bottom: 5px;">Already have an account? <a href="{% url 'account_login' %}">Login</a></p>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="register" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{% url 'account_register' %}" method="POST">
+                {% csrf_token %}
+
+                <div class="modal-header">
+                    <p class="modal-title" id="register">Create New Account <span class="float-right">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </span></p>
+
+                </div>
+                <div class="modal-body">
+                    {% for field in form1 %}
+                    <div class="form-group has-feedback">
+                        {{field.errors}}
+                        {{field.label_tag}}
+                        {{field}}
+                    </div>
+                    {% endfor %}
+
+                    {% for field in form2 %}
+                    <div class="form-group has-feedback">
+                        {{field.errors}}
+                        {{field.label_tag}}
+                        {{field}}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="none" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="submit" name="reg"
+                        onclick="return confirm('Are you sure the details provided are correct?\nYou will NOT be allowed to make modifications.')"
+                        class="btn btn-success">Save</button>
+                </div>
+        </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

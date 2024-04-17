@@ -1,0 +1,108 @@
+{% extends "voting/base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-image: url('login.jpg');
+            background-size: cover;
+        }
+
+        .login-box {
+            max-width: 400px;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            color: white;
+            text-align: center;
+        }
+
+        .login-box .login-logo {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .login-box .form-group {
+            margin-bottom: 20px;
+        }
+
+        .login-box .form-group input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .login-box .form-group input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: black; /* Change color to black */
+        }
+
+        .login-box button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF; /* Set sky blue background color */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-box button[type="submit"]:hover {
+            background-color: #0056b3; /* Darken the background color on hover */
+        }
+
+        .login-box p {
+            margin-top: 20px;
+            color: black; /* Change color to black */
+        }
+
+        .login-box p a {
+            color: #007BFF; /* Set sky blue color */
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <div class="login-logo">
+            <b>Online Voting System</b>
+        </div>
+
+        <div class="login-box-body">
+            <form action="{% url 'account_login' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit">Log In</button>
+            </form>
+            <p>Already have an account? <a href="{% url 'account_register' %}">Sign up</a></p>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock content %}

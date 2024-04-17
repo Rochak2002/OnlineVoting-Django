@@ -1,0 +1,99 @@
+{% extends 'root.html' %}
+{% block content %}
+<style>
+  /* Add CSS for gradient red color to buttons */
+  .btn-gradient-red {
+    background: linear-gradient(to right, #FF416C, #FF4B2B);
+    color: white; /* Text color */
+    /* Add any other button styling you need */
+  }
+
+  /* Add CSS for gradient sky blue color to fonts */
+  .sky-blue-font {
+    color: linear-gradient(to right, #77A1D3, #79CBCA);
+    /* Add any other font styling you need */
+  }
+
+  /* Add CSS for gradient blue color to nav bar buttons */
+  .navbar-button {
+    background: linear-gradient(to right, #2196F3, #1976D2); /* Gradient Blue */
+    color: white; /* Text color */
+    /* Add any other nav bar button styling you need */
+  }
+
+  /* Add CSS for white background if required */
+  .white-bg {
+    background-color: white; /* White background */
+    /* Add any other styling for the white background */
+  }
+</style>
+
+<section class="content white-bg">
+  <div class="row">
+    <div class="col-xs-10 col-xs-offset-1" id="content">
+    </div>
+  </div>
+</section>
+{% endblock content %}
+
+{% block custom_js %}
+<script>
+  $(function(){
+    fetch();
+  
+    $(document).on('click', '.reset', function(e){
+      e.preventDefault();
+      var desc = $(this).data('desc');
+      $('.'+desc).iCheck('uncheck');
+    });
+  
+    $(document).on('click', '.moveup', function(e){
+      e.preventDefault();
+      var id = $(this).data('id');
+      $('#'+id).animate({
+        'marginTop' : "-300px"
+      });
+      $.ajax({
+        type: 'GET',
+        url: '{% url "update_ballot_position" 1 "up" %}'.replace(1, id),
+        dataType: 'json',
+        success: function(response){
+          if(!response.error){
+            fetch();
+          }
+        }
+      });
+    });
+  
+    $(document).on('click', '.movedown', function(e){
+      e.preventDefault();
+      var id = $(this).data('id');
+      $('#'+id).animate({
+        'marginTop' : "+300px"
+      });
+      $.ajax({
+        type: 'GET',
+        url:  '{% url "update_ballot_position" 1 "down" %}'.replace(1, id),
+        dataType: 'json',
+        success: function(response){
+          if(!response.error){
+            fetch();
+          }
+        }
+      });
+    });
+  
+  });
+  
+  function fetch(){
+    $.ajax({
+      type: 'GET',
+      url: '{% url "fetch_ballot" %}',
+      dataType: 'json',
+      success: function(response){
+        $('#content').html(response).iCheck({checkboxClass: 'icheckbox_flat-green',radioClass: 'iradio_flat-green'});
+      }
+    });
+  }
+</script>
+{% endblock custom_js %}
