@@ -11,9 +11,7 @@ from django_renderpdf.views import PDFView
 
 
 def find_n_winners(data, n):
-    """Read More
-    https://www.geeksforgeeks.org/python-program-to-find-n-largest-elements-from-a-list/
-    """
+   
     final_list = []
     candidate_data = data[:]
     # print("Candidate = ", str(candidate_data))
@@ -71,9 +69,6 @@ class PrintView(PDFView):
                     if winner['votes'] == 0:
                         winner = "No one voted for this yet position, yet."
                     else:
-                        """
-                        https://stackoverflow.com/questions/18940540/how-can-i-count-the-occurrences-of-an-item-in-a-list-of-dictionaries
-                        """
                         count = sum(1 for d in candidate_data if d.get(
                             'votes') == winner['votes'])
                         if count > 1:
