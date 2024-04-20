@@ -226,8 +226,8 @@ def updatePosition(request):
         messages.error(request, "Access Denied")
     try:
         instance = Position.objects.get(id=request.POST.get('id'))
-        pos = PositionForm(request.POST or None, instance=instance)
-        pos.save()
+        position = PositionForm(request.POST or None, instance=instance)
+        position.save()
         messages.success(request, "Position has been updated")
     except:
         messages.error(request, "Access To This Resource Denied")
@@ -239,8 +239,8 @@ def deletePosition(request):
     if request.method != 'POST':
         messages.error(request, "Access Denied")
     try:
-        pos = Position.objects.get(id=request.POST.get('id'))
-        pos.delete()
+        admin = Position.objects.get(id=request.POST.get('id')).admin
+        admin.delete()
         messages.success(request, "Position Has Been Deleted")
     except:
         messages.error(request, "Access To This Resource Denied")
