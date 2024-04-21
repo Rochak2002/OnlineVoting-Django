@@ -236,10 +236,11 @@ def updatePosition(request):
 
 
 def deletePosition(request):
+    print(request.POST)
     if request.method != 'POST':
         messages.error(request, "Access Denied")
     try:
-        admin = Position.objects.get(id=request.POST.get('id')).admin
+        admin = Position.objects.get(id=request.POST.get('id'))
         admin.delete()
         messages.success(request, "Position Has Been Deleted")
     except:
@@ -270,6 +271,7 @@ def updateCandidate(request):
         messages.error(request, "Access Denied")
     try:
         candidate_id = request.POST.get('id')
+        print(candidate_id)
         candidate = Candidate.objects.get(id=candidate_id)
         form = CandidateForm(request.POST or None,
                              request.FILES or None, instance=candidate)
@@ -285,6 +287,7 @@ def updateCandidate(request):
 
 
 def deleteCandidate(request):
+    print(request)
     if request.method != 'POST':
         messages.error(request, "Access Denied")
     try:
